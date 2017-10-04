@@ -19,13 +19,23 @@ defmodule Mix.Tasks.Attest.Gen.Schema do
     |> copy_new_files(paths, schema: schema)
   end
 
-  def copy_new_files(%Schema{context_app: ctx_app} = schema, paths, binding) do
+  def copy_new_files(schema, paths, binding) do
+    copy_file_for_schema(schema, paths, binding)
+    copy_file_for_migration(schema, paths, binding)
+    schema
+  end
+
+  defp copy_file_for_schema(schema, paths, binding) do
+    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.schema", binding, [
+      {:eex, "schema.ex", schema.file}
+    ]
+  end
+
+  defp copy_file_for_migration(%Schema{context_app: ctx_app} = schema, paths, binding) do
     migration_path = Mix.Phoenix.context_app_path(ctx_app, "priv/repo/migrations/#{timestamp()}_create_#{schema.table}.exs")
     Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.schema", binding, [
       {:eex, "migration.exs", migration_path},
     ]
-
-    schema
   end
 
   defp validate_args!([_, plural | _] = args) do
