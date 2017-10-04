@@ -15,4 +15,8 @@ defmodule Attest do
   def hello do
     :world
   end
+
+  def generator_paths() do
+    [".", :attest]
+  end
 end
