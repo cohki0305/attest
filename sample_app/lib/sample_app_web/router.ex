@@ -1,5 +1,6 @@
 defmodule SampleAppWeb.Router do
   use SampleAppWeb, :router
+  use Attest.RouterHelper
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,6 +16,7 @@ defmodule SampleAppWeb.Router do
 
   scope "/", SampleAppWeb do
     pipe_through :browser # Use the default browser stack
+    attest_for :user
 
     get "/", PageController, :index
   end
