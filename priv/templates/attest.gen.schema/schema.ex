@@ -1,6 +1,7 @@
 defmodule <%= inspect schema.module %> do
   use Ecto.Schema
   import Ecto.Changeset
+  alias <%= inspect schema.module %>
 
   schema <%= inspect schema.table %> do
     field :email, :string
@@ -13,7 +14,7 @@ defmodule <%= inspect schema.module %> do
 
   def changeset(%<%= inspect schema.alias %>{} = <%= schema.singular %>, attrs) do
     <%= schema.singular %>
-    |> cast(params, [:email, :password, :verified])
+    |> cast(attrs, [:email, :password, :verified])
     |> change(%{verified: false})
     |> validate_required([:email, :password, :verified])
     |> update_change(:email, &String.downcase/1)
