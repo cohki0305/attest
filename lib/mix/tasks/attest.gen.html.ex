@@ -39,12 +39,18 @@ defmodule Mix.Tasks.Attest.Gen.Html do
 
   defp copy_file_for_html(%Schema{context_app: context_app}, %Context{basename: basename}, paths, binding) do
     web_prefix = Mix.Phoenix.web_path(context_app)
-    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.html", binding, [
-      {:eex, "registrations_controller.ex", "#{web_prefix}/controllers/#{basename}/registrations_controller.ex"},
-      {:eex, "sessions_controller.ex",      "#{web_prefix}/controllers/#{basename}/sessions_controller.ex"},
-      {:eex, "registrations_view.ex",       "#{web_prefix}/views/#{basename}/registrations_view.ex"},
-      {:eex, "sessions_view.ex",            "#{web_prefix}/views/#{basename}/sessions_view.ex"},
+    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.html/registrations", binding, [
+      {:eex, "controller.ex", "#{web_prefix}/controllers/#{basename}/registrations_controller.ex"},
+      {:eex, "view.ex",       "#{web_prefix}/views/#{basename}/registrations_view.ex"},
+      {:eex, "new.html.eex",  "#{web_prefix}/templates/#{basename}/registrations/new.html.eex"},
     ]
+
+    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.html/sessions", binding, [
+      {:eex, "controller.ex", "#{web_prefix}/controllers/#{basename}/sessions_controller.ex"},
+      {:eex, "view.ex",       "#{web_prefix}/views/#{basename}/sessions_view.ex"},
+      {:eex, "new.html.eex",  "#{web_prefix}/templates/#{basename}/sessions/new.html.eex"},
+    ]
+
   end
 
   defp timestamp do
