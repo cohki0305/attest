@@ -10,7 +10,7 @@ defmodule <%= inspect context.web_module %>.<%= inspect context.alias %>.Registr
 
   def create(conn, %{<%= inspect schema.singular %> => <%= schema.singular %>_params}) do
     changeset = <%= inspect schema.alias %>.changeset(%<%= inspect schema.alias %>{}, <%= schema.singular %>_params)
-    case <%= inspect schema.alias %>.create(changeset, <%= inspect schema.repo %>) do
+    case Attest.Registration.create(changeset, Repo) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "ようこそ" <> changeset.params["email"])
