@@ -1,6 +1,6 @@
 <h1>ログイン</h1>
 
-<%= form_for @conn, sessions_path(@conn, :create), [name: :session], fn form -> %>
+<%= form_for @conn, user_page_sessions_path(@conn, :create), [name: :session], fn form -> %>
   <div class="form-group">
     <label>メールアドレス</label>
     <%= email_input form, :email, class: "form-control" %>

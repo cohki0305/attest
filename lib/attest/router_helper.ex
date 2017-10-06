@@ -5,9 +5,14 @@ defmodule Attest.RouterHelper do
     end
   end
 
-  defmacro attest_for(resource) when is_atom(resource) do
+  defmacro attest_for(basename) when is_atom(basename) do
+    basename_module = basename
+      |> Atom.to_string
+      |> Phoenix.Naming.camelize
+      |> String.to_atom
+
     quote do
-      scope "/#{unquote(resource)}_page", unquote("#{resource}_page" |> Phoenix.Naming.camelize() |> String.to_atom()) do
+      scope "/#{unquote(basename)}", unquote(basename_module), as: unquote(basename) do
         resources "/registers", RegistrationsController, only: [:new, :create],          singleton: true
         resources "/login",     SessionsController,      only: [:new, :create, :delete], singleton: true
       end
