@@ -10,7 +10,7 @@ defmodule SampleAppWeb.UserPage.RegistrationsController do
 
   def create(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
-    case Attest.Registration.create_resource(changeset, SampleApp.Repo) do
+    case Attest.Registration.create_resource(changeset) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "ようこそ" <> changeset.params["email"])

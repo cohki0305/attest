@@ -41,7 +41,8 @@ defmodule Mix.Tasks.Attest.Gen.Schema do
   defp copy_file_for_controller(%Schema{context_app: context_app}, %Context{basename: basename}, paths, binding) do
     web_prefix = Mix.Phoenix.web_path(context_app)
     Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.schema", binding, [
-      {:eex, "registartions_controller.ex", "#{web_prefix}/controllers/#{basename}/registartions_controller.ex"}
+      {:eex, "registartions_controller.ex", "#{web_prefix}/controllers/#{basename}/registartions_controller.ex"},
+      {:eex, "sessions_controller.ex",      "#{web_prefix}/controllers/#{basename}/sessions_controller.ex"},
     ]
   end
 
