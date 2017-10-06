@@ -1,5 +1,5 @@
 defmodule Attest.Contoller.RegistrationsContoller do
-  use AttestWeb, :controller
+  use Attest.Web, :controller
 
   def new(schema, conn) do
     changeset = struct(schema) |> schema.changeset
