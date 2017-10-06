@@ -1,5 +1,10 @@
 defmodule Attest.Config do
-  def repo do
-    Application.get_env(:attest, :repo)
-  end
+  [
+    :schema_name,
+    :repo,
+  ] |> Enum.each(fn key ->
+         def unquote(key)() do
+          Application.get_env(:attest, unquote(key))
+         end
+       end)
 end
