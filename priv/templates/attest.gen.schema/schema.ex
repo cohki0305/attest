@@ -12,7 +12,7 @@ defmodule <%= inspect schema.module %> do
     timestamps()
   end
 
-  def changeset(%<%= inspect schema.alias %>{} = <%= schema.singular %>, attrs) do
+  def changeset(%<%= inspect schema.alias %>{} = <%= schema.singular %>, attrs \\ %{}) do
     <%= schema.singular %>
     |> cast(attrs, [:email, :password, :verified])
     |> change(%{verified: false})
