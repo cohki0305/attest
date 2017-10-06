@@ -10,7 +10,6 @@ defmodule Mix.Tasks.Attest.Gen.Html do
     end
 
     {context, schema} = Gen.Context.build(args)
-    IO.inspect context
     binding = [context: context, schema: schema]
 
     paths = Attest.generator_paths()
@@ -21,7 +20,7 @@ defmodule Mix.Tasks.Attest.Gen.Html do
   def copy_new_files(schema, context, paths, binding) do
     copy_file_for_schema(schema, paths, binding)
     copy_file_for_migration(schema, paths, binding)
-    copy_file_for_controller(schema, context, paths, binding)
+    copy_file_for_html(schema, context, paths, binding)
     schema
   end
 
@@ -38,12 +37,20 @@ defmodule Mix.Tasks.Attest.Gen.Html do
     ]
   end
 
-  defp copy_file_for_controller(%Schema{context_app: context_app}, %Context{basename: basename}, paths, binding) do
+  defp copy_file_for_html(%Schema{context_app: context_app}, %Context{basename: basename}, paths, binding) do
     web_prefix = Mix.Phoenix.web_path(context_app)
-    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.controller", binding, [
-      {:eex, "registartions_controller.ex", "#{web_prefix}/controllers/#{basename}/registartions_controller.ex"},
-      {:eex, "sessions_controller.ex",      "#{web_prefix}/controllers/#{basename}/sessions_controller.ex"},
+    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.html/registrations", binding, [
+      {:eex, "controller.ex", "#{web_prefix}/controllers/#{basename}/registrations_controller.ex"},
+      {:eex, "view.ex",       "#{web_prefix}/views/#{basename}/registrations_view.ex"},
+      {:eex, "new.html.eex",  "#{web_prefix}/templates/#{basename}/registrations/new.html.eex"},
     ]
+
+    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.html/sessions", binding, [
+      {:eex, "controller.ex", "#{web_prefix}/controllers/#{basename}/sessions_controller.ex"},
+      {:eex, "view.ex",       "#{web_prefix}/views/#{basename}/sessions_view.ex"},
+      {:eex, "new.html.eex",  "#{web_prefix}/templates/#{basename}/sessions/new.html.eex"},
+    ]
+
   end
 
   defp timestamp do
