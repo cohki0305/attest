@@ -22,6 +22,7 @@ defmodule Attest.Mixfile do
   defp deps do
     [
       {:phoenix, "~> 1.3", optional: true},
+      {:phoenix_ecto, "~> 3.2", optional: true},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
     ]

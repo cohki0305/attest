@@ -1,27 +1,27 @@
 defmodule Mix.Tasks.Attest.Gen.Schema do
   require Mix.Phoenix.Schema
-  alias Mix.Phoenix.Schema
+  alias Mix.Phoenix.{Context, Schema}
   use Mix.Task
+  alias Mix.Tasks.Phx.Gen
 
   def run(args) do
     if Mix.Project.umbrella?() do
       Mix.raise "mix phx.gen.schema can only be run inside an application directory"
     end
 
-    {_, args, _} = OptionParser.parse(args)
-    if length(args) >= 3, do: raise_with_help()
-    [schema_name, plural | _] = validate_args!(args)
+    {context, schema} = Gen.Context.build(args)
+    IO.inspect context
+    binding = [context: context, schema: schema]
 
-    schema = Schema.new(schema_name, plural, [], [])
     paths = Attest.generator_paths()
 
-    schema
-    |> copy_new_files(paths, schema: schema)
+    copy_new_files(schema, context, paths, binding)
   end
 
-  def copy_new_files(schema, paths, binding) do
+  def copy_new_files(schema, context, paths, binding) do
     copy_file_for_schema(schema, paths, binding)
     copy_file_for_migration(schema, paths, binding)
+    copy_file_for_controller(schema, context, paths, binding)
     schema
   end
 
@@ -38,22 +38,11 @@ defmodule Mix.Tasks.Attest.Gen.Schema do
     ]
   end
 
-  defp validate_args!([_, plural | _] = args) do
-    cond do
-      plural != Phoenix.Naming.underscore(plural) ->
-        Mix.raise "Expectded the second argument, #{inspect plural}, to be all lowercase using snake_case convention"
-      true ->
-        args
-    end
-  end
-
-  defp raise_with_help do
-    Mix.raise """
-    mix attest.gen.model expects both singular and plural names
-    of the generated resource followed by any number of attributes:
-
-        mix phoenix.gen.model User users name:string
-    """
+  defp copy_file_for_controller(%Schema{context_app: context_app}, %Context{basename: basename}, paths, binding) do
+    web_prefix = Mix.Phoenix.web_path(context_app)
+    Mix.Phoenix.copy_from paths, "priv/templates/attest.gen.schema", binding, [
+      {:eex, "registartions_controller.ex", "#{web_prefix}/controllers/#{basename}/registartions_controller.ex"}
+    ]
   end
 
   defp timestamp do

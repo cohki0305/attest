@@ -1,9 +1,9 @@
-defmodule <%= inspect schema.module %> do
+defmodule SampleApp.UserPage.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias <%= inspect schema.module %>
+  alias SampleApp.UserPage.User
 
-  schema <%= inspect schema.table %> do
+  schema "users" do
     field :email, :string
     field :password, :string, virtual: true
     field :crypted_password, :string
@@ -12,8 +12,8 @@ defmodule <%= inspect schema.module %> do
     timestamps()
   end
 
-  def changeset(%<%= inspect schema.alias %>{} = <%= schema.singular %>, attrs \\ %{}) do
-    <%= schema.singular %>
+  def changeset(%User{} = user, attrs \\ %{}) do
+    user
     |> cast(attrs, [:email, :password, :verified])
     |> change(%{verified: false})
     |> validate_required([:email, :password, :verified])
