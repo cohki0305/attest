@@ -1,4 +1,4 @@
-defmodule Web do
+defmodule Attest.Web do
   def controller do
     quote do
       use Phoenix.Controller
