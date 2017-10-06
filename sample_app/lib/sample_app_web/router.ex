@@ -16,7 +16,7 @@ defmodule SampleAppWeb.Router do
 
   scope "/", SampleAppWeb do
     pipe_through :browser # Use the default browser stack
-    attest_for :user
+    attest_for :user_page
 
     get "/", PageController, :index
   end

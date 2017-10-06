@@ -1,6 +1,6 @@
 <h1>ユーザ登録</h1>
 
-<%= form_for @changeset, registrations_path(@conn, :create), fn form -> %>
+<%= form_for @changeset, user_page_registrations_path(@conn, :create), fn form -> %>
 
   <div class="form-group">
     <label>メールアドレス</label>
