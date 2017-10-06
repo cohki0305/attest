@@ -8,7 +8,8 @@ defmodule Attest.RouterHelper do
   defmacro attest_for(resource) when is_atom(resource) do
     quote do
       scope "/#{unquote(resource)}_page", unquote("#{resource}_page" |> Phoenix.Naming.camelize() |> String.to_atom()) do
-        resources "/registers", RegistrationsController, only: [:new, :create], singleton: true
+        resources "/registers", RegistrationsController, only: [:new, :create],          singleton: true
+        resources "/login",     SessionsController,      only: [:new, :create, :delete], singleton: true
       end
     end
   end
