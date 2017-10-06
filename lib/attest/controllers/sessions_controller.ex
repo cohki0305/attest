@@ -1,5 +1,5 @@
 defmodule Attest.Contoller.SessionnsContoller do
-  use AttestWeb, :controller
+  use Attest.Web, :controller
 
   def create(schema, conn, params, redirect_path \\ "/") do
     case schema |> Attest.Session.create(params) do
