@@ -1,4 +1,8 @@
 defmodule Attest.Config do
+  @moduledoc """
+    Get value from config
+  """
+
   [
     :schema_name,
     :repo,

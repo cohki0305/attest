@@ -1,4 +1,7 @@
 defmodule Attest.Session do
+  @doc """
+  create session
+  """
   def create(schema, %{"email" => email, "password" => password}, repo \\ Attest.Config.repo) do
     resource = schema |> repo.get_by(email: String.downcase(email))
     case authenticate(resource, password) do

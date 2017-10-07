@@ -5,6 +5,10 @@ defmodule Attest.RouterHelper do
     end
   end
 
+  @doc """
+  define routes for account authentication.
+  first argument must be context of schema.
+  """
   defmacro attest_for(basename) when is_atom(basename) do
     basename_module = basename
       |> Atom.to_string
