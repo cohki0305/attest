@@ -1,11 +1,6 @@
 # Attest
 
-**TODO: Add description**
-
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `attest` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +10,54 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/attest](https://hexdocs.pm/attest).
+## Get Started
 
+### Generate schema, migration and controller, etc.
+
+You can generate following files by one command.
+ - schema
+ - migration
+ - controller
+ - view
+ - template
+
+```
+mix attest.gen.html UserPage User users
+```
+
+The first argument is the context module.
+The second argument is the schema module.
+The third argument is the table name of schema.
+
+## Change config.exs
+
+add following code in `config.exs`
+
+```elixir
+config :attest,
+  repo: SampleApp.Repo,
+  schema_name: SampleApp.UserPage.User
+```
+
+`schema_name` must be the one you create by the command.
+
+## Setup router
+
+```diff
+# router.ex
+
+defmodule SampleAppWeb.Router do
+  use SampleAppWeb, :router
++ use Attest.RouterHelper
+  ...
+
+  scope "/", SampleAppWeb do
+    pipe_through :browser # Use the default browser stack
+    attest_for :user_page
+
+    get "/", PageController, :index
+  end
+
+
+end
+```
