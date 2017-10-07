@@ -4,6 +4,17 @@ defmodule Mix.Tasks.Attest.Gen.Html do
   use Mix.Task
   alias Mix.Tasks.Phx.Gen
 
+  @moduledoc """
+  Generates controller, views, and context for an HTML resource.
+
+      mix attest.gen.html UserPage User users
+
+  The first argument is the context module.
+  The second argument is the schema module.
+  The third argument is the table name of schema.
+  """
+
+  @doc false
   def run(args) do
     if Mix.Project.umbrella?() do
       Mix.raise "mix phx.gen.schema can only be run inside an application directory"
@@ -17,7 +28,7 @@ defmodule Mix.Tasks.Attest.Gen.Html do
     copy_new_files(schema, context, paths, binding)
   end
 
-  def copy_new_files(schema, context, paths, binding) do
+  defp copy_new_files(schema, context, paths, binding) do
     copy_file_for_schema(schema, paths, binding)
     copy_file_for_migration(schema, paths, binding)
     copy_file_for_html(schema, context, paths, binding)
