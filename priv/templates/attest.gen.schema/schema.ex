@@ -14,9 +14,8 @@ defmodule <%= inspect schema.module %> do
 
   def changeset(%<%= inspect schema.alias %>{} = <%= schema.singular %>, attrs \\ %{}) do
     <%= schema.singular %>
-    |> cast(attrs, [:email, :password, :verified])
-    |> change(%{verified: false})
-    |> validate_required([:email, :password, :verified])
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
     |> update_change(:email, &String.downcase/1)
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)

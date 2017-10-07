@@ -4,6 +4,7 @@ defmodule Attest.Registration do
   def create_resource(changeset, repo \\ Attest.Config.repo) do
     changeset
     |> put_change(:crypted_password, hashed_password(changeset.params["password"]))
+    |> change(%{verified: false})
     |> repo.insert()
   end
 
