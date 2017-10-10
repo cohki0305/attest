@@ -27,5 +27,6 @@ config :logger, :console,
 import_config "#{Mix.env}.exs"
 
 config :attest,
+  base: SampleApp,
   repo: SampleApp.Repo,
-  schema_name: SampleApp.UserPage.User
+  resources: %{user_page: :user}

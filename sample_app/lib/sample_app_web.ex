@@ -23,6 +23,7 @@ defmodule SampleAppWeb do
       import Plug.Conn
       import SampleAppWeb.Router.Helpers
       import SampleAppWeb.Gettext
+      import Attest.Helpers
     end
   end
 
@@ -40,6 +41,7 @@ defmodule SampleAppWeb do
       import SampleAppWeb.Router.Helpers
       import SampleAppWeb.ErrorHelpers
       import SampleAppWeb.Gettext
+      import Attest.Helpers
     end
   end
 
