@@ -61,3 +61,13 @@ defmodule SampleAppWeb.Router do
 
 end
 ```
+
+## helper methods
+
+```elixir
+# if you logged as user, you can use the following method.
+current_user
+
+# you can check whether you logged in as the resource
+user_logged_in?
+```
