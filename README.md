@@ -66,8 +66,8 @@ end
 
 ```elixir
 # if you logged as user, you can use the following method.
-current_user
+current_user(conn)
 
 # you can check whether you logged in as the resource
-user_logged_in?
+user_logged_in?(conn)
 ```
